@@ -48,7 +48,6 @@ public class Producer implements Runnable {
             Client client = createTwitterClient(msgQueue);
             client.connect();
 
-            // Create a MessageProducer from the Session to the Topic or Queue
             MessageProducer producer = session.createProducer(destination);
             producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
@@ -67,11 +66,6 @@ public class Producer implements Runnable {
                 }
             }
 
-            try {
-                Thread.sleep(30000L);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             logger.debug("Shutting down Producer");
             session.close();
             connection.close();
