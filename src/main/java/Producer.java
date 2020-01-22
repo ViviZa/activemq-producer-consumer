@@ -20,26 +20,29 @@ import java.util.concurrent.TimeUnit;
 
 public class Producer {
 
-    private final String consumerKey = "vC4bsWbRLKyRIiuubqulY6oTZ";
-    private final String consumerSecret = "SjsFzeMU6XAZZWgFS9MjxDqZXG2rhHgAPQY4w7Y3VKkhYH3evt";
-    private final String token = "1218470536482893824-C0lBoZSTFs9KyuoeAv77XOolSkUkl1";
-    private final String secret = "6RSx33UhjSrRd3i0n1IbZYsEvi5cimHuFivkblc86e6Zf";
+    private String consumerKey;
+    private String token;
+    private String consumerSecret;
+    private String secret;
     private Logger logger = LoggerFactory.getLogger(Producer.class);
-    private Connection connection;
 
-
-    public static void main(String[] args) {
-        new Producer().produceMessages();
+    public Producer(String consumerKey, String token, String consumerSecret, String secret){
+        this.consumerKey = consumerKey;
+        this.token = token;
+        this.consumerSecret = consumerSecret;
+        this.secret = secret;
     }
 
-    private void produceMessages() {
+
+    public void produceMessages() {
         try {
             // Create a connection to queue
             ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
-            connection = connectionFactory.createConnection();
+            Connection connection = connectionFactory.createConnection();
             connection.start();
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createQueue("myQueue");
+            //destination = session.createTopic("CLIMATE");
 
             //create connection to Twitter
             BlockingQueue<String> msgQueue = new LinkedBlockingQueue<String>(1000);
