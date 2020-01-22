@@ -18,7 +18,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class Producer {
+public class Producer implements Runnable {
 
     private String consumerKey;
     private String token;
@@ -33,8 +33,7 @@ public class Producer {
         this.secret = secret;
     }
 
-
-    public void produceMessages() {
+    public void run() {
         try {
             // Create a connection to queue
             ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
@@ -69,12 +68,11 @@ public class Producer {
             }
 
             try {
-                Thread.sleep(20000L);
+                Thread.sleep(30000L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            // Clean up
+            logger.debug("Shutting down Producer");
             session.close();
             connection.close();
 
