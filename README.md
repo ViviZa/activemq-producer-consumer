@@ -13,9 +13,9 @@ This project contains a producer and a consumer implementation connected to a qu
  
 ## prerequisites:
 - ActiveMq installation 
-- a queue in ActiveMq named "myQueue"
-- sqlite installation 
-- database named "twittertweets.db" with table "tweets" having columns: id_str, created_at, consumed_at, consumed_through
+- A queue in ActiveMq named "myQueue"
+- Sqlite installation 
+- Database named "twittertweets.db" with table "tweets" having columns: id_str, created_at, consumed_at, consumed_through
 
 ## run the application:
 
