@@ -5,12 +5,14 @@ import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Consumer implements Runnable {
 
     private Logger logger = LoggerFactory.getLogger(Consumer.class);
     private ObjectMapper mapper = new ObjectMapper();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS");
     private int messageRestriction = 0;
 
     public void run() {
@@ -32,7 +34,8 @@ public class Consumer implements Runnable {
                     String text = textMessage.getText();
                     try {
                         Tweet tweet = mapper.readValue(text, Tweet.class);
-                        tweet.setConsumed_at(new Date().toString());
+                        Date now = new Date();
+                        tweet.setConsumed_at(dateFormat.format(now));
                         // TODO do something with the data
                     } catch (IOException e) {
                         e.printStackTrace();
