@@ -10,10 +10,11 @@ import java.util.Date;
 
 public class Consumer implements Runnable {
 
-    private Logger logger = LoggerFactory.getLogger(Consumer.class);
     private ObjectMapper mapper = new ObjectMapper();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS");
+    private DatabaseConnector databaseConnector = new DatabaseConnector();
     private int messageRestriction = 0;
+    private Logger logger = LoggerFactory.getLogger(Consumer.class);
 
     public void run() {
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
@@ -25,7 +26,7 @@ public class Consumer implements Runnable {
             Destination destination = session.createQueue("myQueue");
             MessageConsumer consumer = session.createConsumer(destination);
 
-            while (messageRestriction < 20) {
+            while (messageRestriction < 50) {
                 messageRestriction++;
                 Message message = consumer.receive(2000);
 
@@ -36,15 +37,17 @@ public class Consumer implements Runnable {
                         Tweet tweet = mapper.readValue(text, Tweet.class);
                         Date now = new Date();
                         tweet.setConsumed_at(dateFormat.format(now));
-                        // TODO do something with the data
+
+                        logger.info("send tweet ");
+                        writeTweetIntoDb(tweet);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    logger.info("Received text: " + text);
+                    logger.info(text);
                 }
             }
 
-            logger.debug("Shutting down Consumer");
+            logger.debug("Shutting down");
             consumer.close();
             session.close();
             connection.close();
@@ -52,7 +55,10 @@ public class Consumer implements Runnable {
         } catch (JMSException e) {
             e.printStackTrace();
         }
+    }
 
+    private void writeTweetIntoDb(Tweet tweet){
+        databaseConnector.insert(tweet.getId(), tweet.getCreated_at(), tweet.getConsumed_at(), "ActiveMq");
     }
 
 }
