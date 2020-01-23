@@ -11,16 +11,17 @@ This project contains a producer and a consumer implementation connected to a qu
 - Deserializes tweets
 - Saves tweets id, creation date, consumed date and source in a database 
  
-## prerequisites:
+## Prerequisites:
 - ActiveMq installation 
 - A queue in ActiveMq named "myQueue"
+- Twitter developer credentials
 - Sqlite installation 
 - Database named "twittertweets.db" with table "tweets" having columns: id_str, created_at, consumed_at, consumed_through
 
-## run the application:
+## Run the application:
 
-- start ActiveMq
+- Start ActiveMq
 ```
     ./bin/activemq start
 ```
-- run main method of the project
+- Run main method of the project
