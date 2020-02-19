@@ -14,7 +14,15 @@ public class Main {
 
         Producer producer = new Producer(consumerKey, token, consumerSecret, secret);
         executorService.execute(producer);
-        Consumer consumer = new Consumer();
+        //multiple producer
+        /*SingleMessageProducer messageProducer = new SingleMessageProducer();
+        executorService.execute(messageProducer);*/
+
+        Consumer consumer = new Consumer(1);
         executorService.execute(consumer);
+
+        //multiple consumer
+        /*Consumer consumer1 = new Consumer(2);
+        executorService.execute(consumer1);*/
     }
 }

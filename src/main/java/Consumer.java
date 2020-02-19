@@ -10,6 +10,12 @@ import java.util.Date;
 
 public class Consumer implements Runnable {
 
+    private int id;
+
+    public Consumer(int id) {
+        this.id = id;
+    }
+
     private ObjectMapper mapper = new ObjectMapper();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS");
     private DatabaseConnector databaseConnector = new DatabaseConnector();
@@ -26,7 +32,7 @@ public class Consumer implements Runnable {
             Destination destination = session.createQueue("myQueue");
             MessageConsumer consumer = session.createConsumer(destination);
 
-            while (messageRestriction < 50) {
+            while (messageRestriction < 100) {
                 messageRestriction++;
                 Message message = consumer.receive(2000);
 
@@ -38,12 +44,11 @@ public class Consumer implements Runnable {
                         Date now = new Date();
                         tweet.setConsumed_at(dateFormat.format(now));
 
-                        logger.info("send tweet ");
+                        logger.info("Consumer " + id + " " + text);
                         writeTweetIntoDb(tweet);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    logger.info(text);
                 }
             }
 

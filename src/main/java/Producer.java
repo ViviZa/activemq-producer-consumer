@@ -41,7 +41,6 @@ public class Producer implements Runnable {
             connection.start();
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createQueue("myQueue");
-            //destination = session.createTopic("CLIMATE");
 
             //create connection to Twitter
             BlockingQueue<String> msgQueue = new LinkedBlockingQueue<String>(1000);
@@ -61,7 +60,7 @@ public class Producer implements Runnable {
                     client.stop();
                 }
                 if (msg != null) {
-                    logger.info(msg);
+                    logger.info("Sending Tweet to Queue " + msg);
                     producer.send(session.createTextMessage(msg));
                 }
             }
@@ -80,7 +79,7 @@ public class Producer implements Runnable {
         StatusesFilterEndpoint hosebirdEndpoint = new StatusesFilterEndpoint();
 
         //set term to listen to in twitter tweets
-        List<String> terms = Lists.newArrayList("Kafka");
+        List<String> terms = Lists.newArrayList("bitcoin");
         hosebirdEndpoint.trackTerms(terms);
 
         Authentication hosebirdAuth = new OAuth1(consumerKey, consumerSecret, token, secret);
