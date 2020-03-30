@@ -18,15 +18,15 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class Producer implements Runnable {
+public class ActiveMqProducer implements Runnable {
 
     private String consumerKey;
     private String token;
     private String consumerSecret;
     private String secret;
-    private Logger logger = LoggerFactory.getLogger(Producer.class);
+    private Logger logger = LoggerFactory.getLogger(ActiveMqProducer.class);
 
-    public Producer(String consumerKey, String token, String consumerSecret, String secret){
+    public ActiveMqProducer(String consumerKey, String token, String consumerSecret, String secret){
         this.consumerKey = consumerKey;
         this.token = token;
         this.consumerSecret = consumerSecret;

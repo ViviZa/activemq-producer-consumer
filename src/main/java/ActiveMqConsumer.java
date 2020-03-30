@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Consumer implements Runnable {
+public class ActiveMqConsumer implements Runnable {
 
     private int id;
 
-    public Consumer(int id) {
+    public ActiveMqConsumer(int id) {
         this.id = id;
     }
 
@@ -20,7 +20,7 @@ public class Consumer implements Runnable {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS");
     private DatabaseConnector databaseConnector = new DatabaseConnector();
     private int messageRestriction = 0;
-    private Logger logger = LoggerFactory.getLogger(Consumer.class);
+    private Logger logger = LoggerFactory.getLogger(ActiveMqConsumer.class);
 
     public void run() {
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");

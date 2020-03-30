@@ -12,14 +12,14 @@ public class Main {
     public static void main (String[] args) {
         ExecutorService executorService = Executors.newFixedThreadPool(20);
 
-        Producer producer = new Producer(consumerKey, token, consumerSecret, secret);
-        executorService.execute(producer);
+        ActiveMqProducer activeMqProducer = new ActiveMqProducer(consumerKey, token, consumerSecret, secret);
+        executorService.execute(activeMqProducer);
         //multiple producer
         /*SingleMessageProducer messageProducer = new SingleMessageProducer();
         executorService.execute(messageProducer);*/
 
-        Consumer consumer = new Consumer(1);
-        executorService.execute(consumer);
+        ActiveMqConsumer activeMqConsumer = new ActiveMqConsumer(1);
+        executorService.execute(activeMqConsumer);
 
         //multiple consumer
         /*Consumer consumer1 = new Consumer(2);

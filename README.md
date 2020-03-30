@@ -1,12 +1,12 @@
 # Messaging System with ActiveMq
 
-This project contains a producer and a consumer implementation connected to a queue of ActiveMq.
+This project contains a activeMqProducer and a activeMqConsumer implementation connected to a queue of ActiveMq.
 
-### Producer
+### ActiveMqProducer
 - Obtains data from Tweets on Twitter containing a special term
 - Sends the filtered Tweets to a queue
 
-### Consumer
+### ActiveMqConsumer
 - Consumes tweets from that queue
 - Deserializes tweets
 - Saves tweets id, creation date, consumed date and source in a database 
